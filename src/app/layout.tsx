@@ -23,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gray-100 min-h-screen flex flex-col justify-between pb-16 md:pb-0 text-gray-900 antialiased">
+      <body className="bg-gray-100 min-h-screen flex flex-col justify-between pb-14 md:pb-0 text-gray-900 antialiased">
         {/* পুরো অ্যাপটিকে CartProvider ও CompareProvider দিয়ে র‍্যাপ করা হলো */}
         <CartProvider>
           <CompareProvider>
