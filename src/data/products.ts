@@ -1,0 +1,87 @@
+import { Product } from '@/types/product';
+
+export const productsData: Product[] = [
+  {
+    id: 1,
+    name: 'UGREEN 4 IN 1 OUT KVM HDMI SWITCH CM608 (90810)',
+    image: '/images/products/kvm-switch.png',
+    price: 8500,
+  },
+  {
+    id: 2,
+    name: 'UGREEN REVODOK MAX 213 THUNDERBOLT 4 13 IN 1 DOCKING STATION (25054)',
+    image: '/images/products/docking-station.png',
+    price: 29500,
+    rating: 5,
+  },
+  {
+    id: 3,
+    name: 'UGREEN NEXODE USB C GAN 300W CHARGER (90864)',
+    image: '/images/products/charger-300w.png',
+    price: 16500,
+  },
+  {
+    id: 4,
+    name: 'UGREEN PB722 25000MAH 200W POWER BANK (35525)',
+    image: '/images/products/powerbank-200w.png',
+    price: 13500,
+    rating: 5,
+  },
+  {
+    id: 5,
+    name: 'UGREEN 16K DISPLAYPORT CABLE 2M DP118 (15384)',
+    image: '/images/products/dp-cable.png',
+    price: 1850,
+    rating: 5,
+  },
+  {
+    id: 6,
+    name: 'UGREEN 300W 48000mAh Portable Charger Power Bank',
+    image: '/images/products/portable-power.png',
+    price: 14600,
+    originalPrice: 18990,
+    saveAmount: 4390,
+    rating: 5,
+  },
+  {
+    id: 7,
+    name: 'UGREEN HDMI 4K VIDEO CAPTURE CARD CM629 (15389)',
+    image: '/images/products/capture-card.png',
+    price: 3650,
+  },
+  {
+    id: 8,
+    name: 'UGREEN CM433 3 IN 1 BLUETOOTH 5.0 TRANSMITTER RECEIVER (20140)',
+    image: '/images/products/bt-transmitter.png',
+    price: 5300,
+  },
+  {
+    id: 9,
+    name: 'MT-VIKI MT-HK401 4 PORT KVM SWITCH',
+    image: '/images/products/viki-kvm.png',
+    price: 7500,
+  },
+  {
+    id: 10,
+    name: 'UGREEN NETWORK CABLE TRACKER (10951)',
+    image: '/images/products/cable-tracker.png',
+    price: 3250,
+    originalPrice: 3500,
+    saveAmount: 250,
+  },
+  {
+    id: 11,
+    name: 'UGREEN CD293 130W USB C CHARGER',
+    image: '/images/products/car-charger.png',
+    price: 2500,
+    originalPrice: 2650,
+    saveAmount: 150,
+  },
+  {
+    id: 12,
+    name: 'ANKER A121B GAN PRIME LITE SMART DISPLAY 100W CHARGER',
+    image: '/images/products/anker-charger.png',
+    price: 4600,
+    rating: 5,
+  },
+];
