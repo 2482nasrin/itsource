@@ -65,14 +65,13 @@ export default function Header() {
   return (
     <>
       {/* ================= 1. MAIN DARK HEADER ================= */}
-      {/* 🔴 মোবাইলে এটি sticky top-0 থাকবে, কিন্তু ডেসকটপে (md:) relative থাকবে যেন স্ক্রল করলে উপরে চলে যায় */}
       <div className="bg-[#0b131e] border-b border-gray-800 w-full sticky md:relative top-0 z-50 md:z-auto">
         <div className="w-full px-4 md:px-8 py-3 md:py-4 flex items-center justify-between">
           {/* Mobile Header Bar */}
           <div className="flex items-center justify-between w-full md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-white p-1 focus:outline-none z-50"
+              className="text-white p-1 focus:outline-none z-50 cursor-pointer"
               aria-label="Toggle Menu"
             >
               {isMobileMenuOpen ? (
@@ -94,7 +93,7 @@ export default function Header() {
 
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="text-white p-1 focus:outline-none"
+              className="text-white p-1 focus:outline-none cursor-pointer"
               aria-label="Toggle Search"
             >
               <Search className="w-6 h-6" />
@@ -102,8 +101,8 @@ export default function Header() {
           </div>
 
           {/* Desktop Top Header Bar */}
-          <div className="hidden md:flex items-center justify-between w-full max-w-[1360px] mx-auto ">
-            <Link href="/" className="relative w-56 h-12">
+          <div className="hidden md:flex items-center justify-between w-full max-w-[1360px] mx-auto">
+            <Link href="/" className="relative w-56 h-12 flex-shrink-0">
               <Image
                 src="/images/logo-it.png"
                 alt="IT SOURCE"
@@ -112,7 +111,9 @@ export default function Header() {
                 priority
               />
             </Link>
-            <SearchBar />
+            <div className="flex-1 max-w-xl mx-8">
+              <SearchBar />
+            </div>
             <NavIcons />
           </div>
         </div>
@@ -120,15 +121,16 @@ export default function Header() {
         {/* Mobile Input Search Bar */}
         {isSearchOpen && (
           <div className="md:hidden px-4 pb-4 border-t border-gray-800 pt-3 bg-[#0b131e]">
-            <SearchBar />
+            <div className="w-full max-w-[1360px] mx-auto">
+              <SearchBar />
+            </div>
           </div>
         )}
       </div>
 
       {/* ================= 2. DESKTOP MAIN MENU ================= */}
-      {/* 🔴 ডেসকটপে এটি sticky top-0 থাকবে এবং স্ক্রল করলে স্থায়ীভাবে টপে আটকে থাকবে */}
-      <div className="hidden sm:block sticky top-0 z-50 w-full bg-white shadow-sm">
-        <div className="w-full max-w-[1360px] mx-auto">
+      <div className="hidden sm:block sticky top-0 z-50 w-full bg-white shadow-sm border-b border-gray-200">
+        <div className="w-full max-w-[1360px] mx-auto ">
           <MainMenu isScrolled={isScrolled} />
         </div>
       </div>
@@ -156,25 +158,36 @@ export default function Header() {
 
               return (
                 <div key={cat.title}>
-                  <button
-                    onClick={() => setOpenCat(isCatActive ? null : cat.title)}
-                    className={`w-full px-4 py-3.5 flex items-center justify-between text-left transition-colors ${
-                      isCatActive
-                        ? 'bg-[#09101a] text-white'
-                        : 'bg-[#070d15] text-gray-200'
-                    }`}
-                  >
-                    <span>{cat.title}</span>
-                    {hasSub ? (
-                      isCatActive ? (
-                        <Minus className="w-4 h-4 text-gray-400" />
-                      ) : (
-                        <Plus className="w-4 h-4 text-gray-400" />
-                      )
-                    ) : (
-                      <Plus className="w-4 h-4 text-gray-400" />
+                  <div className={`w-full flex items-center justify-between transition-colors ${
+                    isCatActive ? 'bg-[#09101a] text-white' : 'bg-[#070d15] text-gray-200'
+                  }`}>
+                    {/* ক্যাটেগরি নামের উপর ক্লিক করলে সরাসরি ক্যাটেগরি পেজে চলে যাবে */}
+                    <Link
+                      href={`/category/${cat.title.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex-1 px-4 py-3.5 block"
+                    >
+                      {cat.title}
+                    </Link>
+
+                    {/* সাব-ক্যাটেগরি থাকলে প্লাস/মাইনাস আইকনে ক্লিক করলে ড্রপডাউন ওপেন হবে */}
+                    {hasSub && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setOpenCat(isCatActive ? null : cat.title);
+                        }}
+                        className="px-4 py-3.5 focus:outline-none cursor-pointer"
+                        aria-label="Toggle Subcategory"
+                      >
+                        {isCatActive ? (
+                          <Minus className="w-4 h-4 text-gray-400" />
+                        ) : (
+                          <Plus className="w-4 h-4 text-gray-400" />
+                        )}
+                      </button>
                     )}
-                  </button>
+                  </div>
 
                   {/* Sub-categories */}
                   {isCatActive && hasSub && (
@@ -185,21 +198,35 @@ export default function Header() {
 
                         return (
                           <div key={sub.title}>
-                            <button
-                              onClick={() =>
-                                setOpenSubCat(isSubActive ? null : sub.title)
-                              }
-                              className="w-full pl-6 pr-4 py-2.5 flex items-center justify-between text-left hover:text-orange-600"
-                            >
-                              <span>{sub.title}</span>
-                              {hasItems &&
-                                (isSubActive ? (
-                                  <Minus className="w-3.5 h-3.5 text-gray-600" />
-                                ) : (
-                                  <Plus className="w-3.5 h-3.5 text-gray-600" />
-                                ))}
-                            </button>
+                            <div className="w-full pl-6 pr-4 py-2.5 flex items-center justify-between hover:text-orange-600">
+                              {/* সাব-ক্যাটেগরি লিংকে ক্লিক করলে পেজে রিডাইরেক্ট হবে */}
+                              <Link
+                                href={`/category/${sub.title.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="flex-1 block py-1"
+                              >
+                                {sub.title}
+                              </Link>
 
+                              {hasItems && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setOpenSubCat(isSubActive ? null : sub.title);
+                                  }}
+                                  className="p-1 focus:outline-none cursor-pointer"
+                                  aria-label="Toggle Nested Items"
+                                >
+                                  {isSubActive ? (
+                                    <Minus className="w-3.5 h-3.5 text-gray-600" />
+                                  ) : (
+                                    <Plus className="w-3.5 h-3.5 text-gray-600" />
+                                  )}
+                                </button>
+                              )}
+                            </div>
+
+                            {/* Nested Items (যেমন: Chuwi, Intel Mini PC ইত্যাদি) */}
                             {isSubActive && hasItems && (
                               <div className="bg-gray-50 pl-10 pr-4 py-1 divide-y divide-gray-100 font-medium text-[11px] text-gray-700">
                                 {sub.items!.map((item) => (
